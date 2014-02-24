@@ -1,6 +1,6 @@
 <!-- See documentation at http://doc.nuxeo.com/x/HgIz -->
-<package type="addon" name="easyshare-marketplace" version="@VERSION@">
-  <title></title>
+<package type="addon" name="easyshare" version="@VERSION@">
+  <title>EasyShare</title>
   <description>
     Anonymouse File Sharing
   </description>
