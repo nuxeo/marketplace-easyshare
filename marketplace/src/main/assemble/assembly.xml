@@ -13,11 +13,10 @@
   </target>
 
   <target name="expand">
-    <!-- Include your artifacts in the graph adding your groupId to groupPrefixes -->
-    <artifact:nuxeo-expand includeTestScope="true"
-                           groupPrefixes="org.nuxeo,org.nuxeo,com.nuxeo" />
+    <artifact:nuxeo-expand includeTestScope="true" groupPrefixes="org.nuxeo" />
     <!-- For Nuxeo IDE being able to use that distribution as a SDK -->
-    <artifact:print output="${outdir}/artifacts-easyshare.properties" mode="sdk" />
+    <artifact:print output="${outdir}/artifacts-easyshare.properties"
+                    mode="sdk" />
     <artifact:print output="${outdir}/test-artifacts-easyshare.properties"
                     mode="sdk"
                     scopes="test" />
@@ -25,9 +24,7 @@
     <artifact:print output="${outdir}/dependency-tree.log" />
   </target>
 
-  <target name="build"
-          depends="init"
-          description="Build  Marketplace package">
+  <target name="build" depends="init" description="Build  Marketplace package">
     <tstamp />
     <delete failonerror="false" dir="${outdir}/nxr" />
     <mkdir dir="${outdir}/nxr" />
@@ -55,9 +52,7 @@
       <artifact:set>
         <includes>
           <artifact groupId="org.nuxeo*" scope="!test" type="!pom" />
-          <!-- Include your artifacts using their groupId for instance -->
-          <artifact groupId="com.nuxeo*" scope="!test" type="!pom" />
-          <artifact groupId="org.nuxeo*" scope="!test" type="!pom" />
+          <artifact groupId="nuxeo-studio" scope="!test" type="!pom" />
         </includes>
       </artifact:set>
     </copy>
@@ -66,12 +61,9 @@
       <artifact:set>
         <includes>
           <artifact groupId="!org.nuxeo*" scope="!test" />
-          <artifact groupId="!org.nuxeo*" scope="!test" />
         </includes>
         <excludes>
-          <!-- Filter out your artifacts using their groupId for instance -->
-          <artifact groupId="com.nuxeo*" />
-          <artifact groupId="org.nuxeo*" />
+          <artifact groupId="nuxeo-studio" />
         </excludes>
       </artifact:set>
     </copy>
@@ -98,41 +90,40 @@
       <patternset refid="easyshare.versus.cap" />
     </unzip>
 
-      <!-- Generate install.xml file -->
-      <!-- See documentation at http://doc.nuxeo.com/x/IgIz -->
-      <var name="install.content" value="&lt;install&gt;" />
-      <var name="install.content"
-           value="${install.content}${line.separator}
+    <!-- Generate install.xml file -->
+    <!-- See documentation at http://doc.nuxeo.com/x/IgIz -->
+    <var name="install.content" value="&lt;install&gt;" />
+    <var name="install.content"
+         value="${install.content}${line.separator}
     &lt;update file=&quot;${package.root}/install/bundles&quot; todir=&quot;${env.bundles}&quot; /&gt;" />
-      <if>
-        <available file="${outdir}/marketplace/install/lib" />
-        <then>
-          <var name="install.content"
-               value="${install.content}${line.separator}
+    <if>
+      <available file="${outdir}/marketplace/install/lib" />
+      <then>
+        <var name="install.content"
+             value="${install.content}${line.separator}
     &lt;update file=&quot;${package.root}/install/lib&quot; todir=&quot;${env.lib}&quot; /&gt;" />
-        </then>
-      </if>
-      <var name="install.content"
-           value="${install.content}${line.separator}
+      </then>
+    </if>
+    <var name="install.content"
+         value="${install.content}${line.separator}
     &lt;copy file=&quot;${package.root}/install/artifacts-sample.properties&quot;${line.separator}
       todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;${line.separator}
     &lt;copy file=&quot;${package.root}/install/${testArtifactPropertiesFilename}&quot;${line.separator}
       todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;${line.separator}" />
-      <!-- Optional: use this if you need your MP to deploy and/or activate a dedicated template -->
-      <if>
-        <available file="${outdir}/marketplace/install/templates" />
-        <then>
-          <var name="install.content"
-               value="${install.content}${line.separator}
+    <!-- Optional: use this if you need your MP to deploy and/or activate a dedicated template -->
+    <if>
+      <available file="${outdir}/marketplace/install/templates" />
+      <then>
+        <var name="install.content"
+             value="${install.content}${line.separator}
     &lt;copy dir=&quot;${package.root}/install/templates&quot; todir=&quot;${env.templates}&quot; overwrite=&quot;true&quot; /&gt;${line.separator}
     &lt;config addtemplate=&quot;sample&quot; /&gt;${line.separator}" />
-        </then>
-      </if>
-      <var name="install.content"
-           value="${install.content}${line.separator}
-  &lt;/install&gt;${line.separator}" />
-      <echo file="${outdir}/marketplace/install.xml"
-            message="${install.content}" />
+      </then>
+    </if>
+    <var name="install.content"
+         value="${install.content}${line.separator}&lt;/install&gt;${line.separator}" />
+    <echo file="${outdir}/marketplace/install.xml"
+          message="${install.content}" />
 
     <zip destfile="${outdir}/${maven.project.artifactId}-${marketplace.easyshare.version}.zip"
          basedir="${outdir}/marketplace" />
