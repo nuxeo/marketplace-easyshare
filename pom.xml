@@ -11,7 +11,7 @@
   <artifactId>mp-parent</artifactId>
   <packaging>pom</packaging>
   <name>Nuxeo Marketplace packaging of easyshare</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1</version>
 
   <properties>
     <marketplace.easyshare.version>1.0-SNAPSHOT</marketplace.easyshare.version>
