@@ -2,7 +2,7 @@
 <package type="addon" name="easyshare" version="@VERSION@">
   <title>EasyShare</title>
   <description>
-    Anonymouse File Sharing
+    Anonymous File Sharing
   </description>
   <home-page>https://github.com/mobrebski/easyshare-package</home-page>
   <vendor>Personnal</vendor>
