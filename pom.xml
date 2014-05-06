@@ -37,6 +37,11 @@
         <version>${marketplace.easyshare.version}</version>
         <type>zip</type>
       </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm</groupId>
+        <artifactId>nuxeo-easyshare</artifactId>
+        <version>${nuxeo.distribution.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
