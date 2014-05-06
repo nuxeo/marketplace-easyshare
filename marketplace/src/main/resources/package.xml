@@ -1,11 +1,9 @@
 <!-- See documentation at http://doc.nuxeo.com/x/HgIz -->
 <package type="addon" name="easyshare" version="@VERSION@">
   <title>EasyShare</title>
-  <description>
-    Anonymous File Sharing
-  </description>
-  <home-page>https://github.com/mobrebski/easyshare-package</home-page>
-  <vendor>Personnal</vendor>
+  <description>Anonymous File Sharing</description>
+  <home-page>http://doc.nuxeo.com/x/rooZAQ</home-page>
+  <vendor>Nuxeo</vendor>
   <installer restart="true" />
   <uninstaller restart="false" />
   <hotreload-support>false</hotreload-support>
@@ -21,18 +19,6 @@
   <platforms>
     <platform>cap-@DISTRIB_VERSION@</platform>
   </platforms>
-  <!-- Dependencies on other packages -->
-  <!-- <dependencies> -->
-  <!-- <package>another-package:1.0.0:1.0.0</package> -->
-  <!-- </dependencies> -->
-  <!-- Conflicts with other packages -->
-  <!-- <conflicts> -->
-  <!-- <package>a-conflicting-package:1.0.0:1.0.0</package> -->
-  <!-- </conflicts> -->
-  <!-- Provides features of other packages -->
-  <!-- <provides> -->
-  <!-- <package>an-embedded-package:1.0.0:1.0.0</package> -->
-  <!-- </provides> -->
   <license>LGPL 2.1</license>
   <license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 </package>
