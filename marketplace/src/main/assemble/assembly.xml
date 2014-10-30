@@ -81,6 +81,8 @@
                 file2="${outdir}/nuxeo-distribution-cap-${nuxeo.distribution.version}.zip"
                 includesfile="${outdir}/includes"
                 excludesfile="${outdir}/excludesfile"
+                ignoreContent="false"
+                ignoreContentPattern=".*\.jar$"
                 patternsetid="easyshare.versus.cap">
     </nx:zipdiff>
     <unzip src="${outdir}/nxr-${marketplace.easyshare.version}.zip"
