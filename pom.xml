@@ -10,10 +10,10 @@
   <artifactId>mp-parent</artifactId>
   <packaging>pom</packaging>
   <name>Nuxeo Marketplace packaging of easyshare</name>
-  <version>1.3.3-SNAPSHOT</version>
+  <version>1.3.4-SNAPSHOT</version>
 
   <properties>
-    <marketplace.easyshare.version>1.3.3-SNAPSHOT</marketplace.easyshare.version>
+    <marketplace.easyshare.version>1.3.4-SNAPSHOT</marketplace.easyshare.version>
   </properties>
 
   <modules>
