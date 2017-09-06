@@ -38,8 +38,10 @@
       </dependency>
       <dependency>
         <groupId>org.nuxeo.ecm</groupId>
-        <artifactId>nuxeo-easyshare</artifactId>
+        <artifactId>nuxeo-easyshare-parent</artifactId>
         <version>${nuxeo.distribution.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
