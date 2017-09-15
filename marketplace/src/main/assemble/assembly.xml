@@ -129,6 +129,14 @@
   &lt;update file=&quot;${package.root}/install/lib-jsf-ui&quot; todir=&quot;${env.lib}&quot; if=&quot;Packages.contains('nuxeo-jsf-ui')&quot; /&gt;" />
       </then>
     </if>
+    <if>
+      <available file="${outdir}/marketplace/install/lib-web-ui" />
+      <then>
+        <var name="install.libs"
+             value="${install.libs}${line.separator}
+          &lt;update file=&quot;${package.root}/install/lib-web-ui&quot; todir=&quot;${env.lib}&quot; if=&quot;Packages.contains('nuxeo-web-ui')&quot; /&gt;" />
+      </then>
+    </if>
 
     <var name="install.properties"
          value="${line.separator}
