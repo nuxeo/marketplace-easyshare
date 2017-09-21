@@ -84,28 +84,74 @@
       <patternset refid="easyshare.versus.jsf" />
     </unzip>
 
+    <!-- Separate JSF packages -->
+    <mkdir dir="${outdir}/marketplace/install/bundles-jsf-ui" />
+    <move todir="${outdir}/marketplace/install/bundles-jsf-ui">
+      <fileset dir="${outdir}/marketplace/install/bundles">
+        <include name="nuxeo-easyshare-jsf-*.jar" />
+      </fileset>
+    </move>
+
+    <!-- Separate Web UI packages -->
+    <mkdir dir="${outdir}/marketplace/install/bundles-web-ui" />
+    <move todir="${outdir}/marketplace/install/bundles-web-ui">
+      <fileset dir="${outdir}/marketplace/install/bundles">
+        <include name="nuxeo-easyshare-web-ui-*.jar" />
+      </fileset>
+    </move>
+
     <!-- Generate install.xml file -->
-    <var name="install.content" value="&lt;install&gt;" />
-    <var name="install.content"
-         value="${install.content}${line.separator}
-    &lt;update file=&quot;${package.root}/install/bundles&quot; todir=&quot;${env.bundles}&quot; /&gt;" />
+    <var name="install.bundles" value=""/>
+    <var name="install.bundles"
+         value="${line.separator}
+  &lt;update file=&quot;${package.root}/install/bundles&quot; todir=&quot;${env.bundles}&quot; /&gt;"/>
+    <var name="install.bundles"
+         value="${install.bundles}${line.separator}
+  &lt;update file=&quot;${package.root}/install/bundles-jsf-ui&quot; todir=&quot;${env.bundles}&quot; if=&quot;Packages.contains('nuxeo-jsf-ui')&quot; /&gt;"/>
+    <var name="install.bundles"
+         value="${install.bundles}${line.separator}
+  &lt;update file=&quot;${package.root}/install/bundles-web-ui&quot; todir=&quot;${env.bundles}&quot; if=&quot;Packages.contains('nuxeo-web-ui')&quot; /&gt;" />
+    
+    <var name="install.libs" value="" />
     <if>
       <available file="${outdir}/marketplace/install/lib" />
       <then>
-        <var name="install.content"
-             value="${install.content}${line.separator}
-    &lt;update file=&quot;${package.root}/install/lib&quot; todir=&quot;${env.lib}&quot; /&gt;" />
+        <var name="install.libs"
+             value="${line.separator}
+  &lt;update file=&quot;${package.root}/install/lib&quot; todir=&quot;${env.lib}&quot; /&gt;" />
       </then>
     </if>
-    <var name="install.content"
-         value="${install.content}${line.separator}
-    &lt;copy file=&quot;${package.root}/install/artifacts-easyshare.properties&quot;${line.separator}
-      todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;${line.separator}
-    &lt;copy file=&quot;${package.root}/install/test-artifacts-easyshare.properties&quot;${line.separator}
-      todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;${line.separator}" />
-    <var name="install.content" value="${install.content}${line.separator}&lt;/install&gt;${line.separator}" />
-    <echo file="${outdir}/marketplace/install.xml" message="${install.content}" />
+    <if>
+      <available file="${outdir}/marketplace/install/lib-jsf-ui" />
+      <then>
+        <var name="install.libs"
+             value="${install.libs}${line.separator}
+  &lt;update file=&quot;${package.root}/install/lib-jsf-ui&quot; todir=&quot;${env.lib}&quot; if=&quot;Packages.contains('nuxeo-jsf-ui')&quot; /&gt;" />
+      </then>
+    </if>
+    <if>
+      <available file="${outdir}/marketplace/install/lib-web-ui" />
+      <then>
+        <var name="install.libs"
+             value="${install.libs}${line.separator}
+          &lt;update file=&quot;${package.root}/install/lib-web-ui&quot; todir=&quot;${env.lib}&quot; if=&quot;Packages.contains('nuxeo-web-ui')&quot; /&gt;" />
+      </then>
+    </if>
 
+    <var name="install.properties"
+         value="${line.separator}
+  &lt;copy file=&quot;${package.root}/install/artifacts-easyshare.properties&quot;${line.separator}
+    todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;${line.separator}
+  &lt;copy file=&quot;${package.root}/install/test-artifacts-easyshare.properties&quot;${line.separator}
+    todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;" />
+
+    <copy file="src/main/resources/install.xml" todir="${outdir}/marketplace" overwrite="true">
+      <filterset>
+        <filter token="BUNDLES" value="${install.bundles}" />
+        <filter token="LIBS" value="${install.libs}" />
+        <filter token="PROPERTIES" value="${install.properties}" />
+      </filterset>
+    </copy>
     <zip destfile="${outdir}/${maven.project.artifactId}-${marketplace.easyshare.version}.zip"
          basedir="${outdir}/marketplace" />
     <artifact:attach file="${outdir}/${maven.project.artifactId}-${marketplace.easyshare.version}.zip" type="zip" />
