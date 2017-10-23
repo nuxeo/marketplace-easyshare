@@ -76,6 +76,7 @@
     <!-- Diff against Nuxeo Server + JSF UI -->
     <nx:zipdiff file1="${outdir}/nxr-${marketplace.easyshare.version}.zip"
                 file2="${outdir}/nuxeo-nxr-server-jsf-ui-${nuxeo.distribution.version}.zip"
+                ignoreContent="true"
                 includesfile="${outdir}/includes"
                 excludesfile="${outdir}/excludesfile"
                 patternsetid="easyshare.versus.jsf">
@@ -111,7 +112,7 @@
     <var name="install.bundles"
          value="${install.bundles}${line.separator}
   &lt;update file=&quot;${package.root}/install/bundles-web-ui&quot; todir=&quot;${env.bundles}&quot; if=&quot;Packages.contains('nuxeo-web-ui')&quot; /&gt;" />
-    
+
     <var name="install.libs" value="" />
     <if>
       <available file="${outdir}/marketplace/install/lib" />
@@ -152,6 +153,13 @@
         <filter token="PROPERTIES" value="${install.properties}" />
       </filterset>
     </copy>
+
+    <nx:studioExtraction todir="${outdir}/marketplace">
+      <fileset dir="${outdir}/marketplace/install/bundles"/>
+      <fileset dir="${outdir}/marketplace/install/bundles-jsf-ui"/>
+      <fileset dir="${outdir}/marketplace/install/bundles-web-ui"/>
+    </nx:studioExtraction>
+
     <zip destfile="${outdir}/${maven.project.artifactId}-${marketplace.easyshare.version}.zip"
          basedir="${outdir}/marketplace" />
     <artifact:attach file="${outdir}/${maven.project.artifactId}-${marketplace.easyshare.version}.zip" type="zip" />
