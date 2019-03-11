@@ -32,10 +32,6 @@
       <groupId>org.nuxeo.ecm</groupId>
       <artifactId>nuxeo-easyshare-jsf</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.nuxeo.ecm</groupId>
-      <artifactId>nuxeo-easyshare-web-ui</artifactId>
-    </dependency>
   </dependencies>
 
   <build>
